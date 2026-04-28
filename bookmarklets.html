@@ -196,5 +196,14 @@
           Drag to Install Comm-iam browser
         </a>
       </div>
+      <div class="bookmarklet-card">
+        <h2 class="bookmarklet-title"> Comm-iam explorer </h2>
+        <p class="bookmarklet-description">
+          Use this bookmarklet on https://comm-iam.flywire.lol/api/v3/api-docs to view swagger UI
+        </p>
+        <a class="bookmarklet-button" href="javascript:(function()%7Bjavascript%3A(function()%7B%0A%20%20const%20content%20%3D%20document.body.innerText%3B%0A%20%20try%20%7B%0A%20%20%20%20let%20spec%20%3D%20JSON.parse(content)%3B%0A%20%20%20%20%0A%20%20%20%20%2F*%20Rewrite%20servers%20to%20use%20HTTPS%20if%20they%20are%20HTTP%20*%2F%0A%20%20%20%20if%20(spec.servers%20%26%26%20Array.isArray(spec.servers))%20%7B%0A%20%20%20%20%20%20spec.servers%20%3D%20spec.servers.map(server%20%3D%3E%20(%7B%0A%20%20%20%20%20%20%20%20...server%2C%0A%20%20%20%20%20%20%20%20url%3A%20server.url.replace(%2F%5Ehttp%3A%2F%2C%20'https%3A')%0A%20%20%20%20%20%20%7D))%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20const%20html%20%3D%20%60%0A%20%20%20%20%20%20%3Chtml%3E%0A%20%20%20%20%20%20%20%20%3Chead%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ctitle%3ESwagger%20Viewer%20(HTTPS%20Fixed)%3C%2Ftitle%3E%0A%20%20%20%20%20%20%20%20%20%20%3Clink%20rel%3D%22stylesheet%22%20href%3D%22https%3A%2F%2Funpkg.com%2Fswagger-ui-dist%405%2Fswagger-ui.css%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstyle%3Ebody%20%7B%20margin%3A%200%3B%20padding%3A%2020px%3B%20font-family%3A%20sans-serif%3B%20%7D%3C%2Fstyle%3E%0A%20%20%20%20%20%20%20%20%3C%2Fhead%3E%0A%20%20%20%20%20%20%20%20%3Cbody%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20id%3D%22swagger-ui%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cscript%20src%3D%22https%3A%2F%2Funpkg.com%2Fswagger-ui-dist%405%2Fswagger-ui-bundle.js%22%3E%3C%2Fscript%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cscript%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20window.onload%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20SwaggerUIBundle(%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20spec%3A%20%24%7BJSON.stringify(spec)%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dom_id%3A%20'%23swagger-ui'%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20deepLinking%3A%20true%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20presets%3A%20%5BSwaggerUIBundle.presets.apis%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%3B%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fscript%3E%0A%20%20%20%20%20%20%20%20%3C%2Fbody%3E%0A%20%20%20%20%20%20%3C%2Fhtml%3E%60%3B%0A%20%20%20%20const%20newTab%20%3D%20window.open()%3B%0A%20%20%20%20newTab.document.open()%3B%0A%20%20%20%20newTab.document.write(html)%3B%0A%20%20%20%20newTab.document.close()%3B%0A%20%20%7D%20catch%20(e)%20%7B%0A%20%20%20%20alert(%22JSON%20Parse%20Error%3A%20%22%20%2B%20e.message)%3B%0A%20%20%7D%0A%7D)()%3B%7D)()%3B">
+          Drag to Install Comm-iam Swagger UI
+        </a>
+      </div>
   </body>
 </html>
