@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Request iframe Test</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 20px; background: #f9f9f9; }
+    h2 { margin-bottom: 8px; }
+    .example { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .controls { display: flex; gap: 8px; margin-bottom: 16px; }
+    .controls input { padding: 8px 12px; font-size: 14px; width: 450px; border: 1px solid #ccc; border-radius: 4px; }
+    .controls button { padding: 8px 16px; font-size: 14px; background: #1a1a2e; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    .controls button:hover { background: #2d2d4e; }
+    iframe { width: 100%; height: 60vh; border: 1px solid #ccc; border-radius: 4px; background: #fff; display: none; }
+    iframe.visible { display: block; }
+    .event-log { margin-top: 16px; background: #0f3460; color: #0f0; padding: 12px 20px; border-radius: 8px; font-family: monospace; font-size: 13px; max-height: 200px; overflow-y: auto; }
+    .event-log strong { color: #fff; }
+    .event-entry { margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <h2>Payment Request iframe Test</h2>
+  <p class="example">Example: https://app.flywire.lol/#/payment-request/{publicId}/init-session</p>
+  <div class="controls">
+    <input id="urlInput" type="text" placeholder="Enter full URL or relative path (/#/payment-request/...)" />
+    <button id="loadBtn">Load in iframe</button>
+  </div>
+  <iframe id="iframe" title="Payment Request"></iframe>
+  <div class="event-log" id="eventLog">
+    <strong>Event Log:</strong><br>
+    <span id="placeholder">Listening for postMessage events...</span>
+  </div>
+  <script>
+    const urlInput = document.getElementById('urlInput');
+    const loadBtn = document.getElementById('loadBtn');
+    const iframe = document.getElementById('iframe');
+    const eventLog = document.getElementById('eventLog');
+    const placeholder = document.getElementById('placeholder');
+    loadBtn.addEventListener('click', function () {
+      let src = urlInput.value.trim();
+      if (!src) return;
+      if (!src.startsWith('/') && !src.startsWith('http')) {
+        src = window.location.protocol + '//' + src;
+      }
+      iframe.src = src;
+      iframe.classList.add('visible');
+    });
+    window.addEventListener('message', function (event) {
+      if (event.data && event.data.type) {
+        if (placeholder) placeholder.remove();
+        const time = new Date().toLocaleTimeString();
+        const entry = document.createElement('div');
+        entry.className = 'event-entry';
+        entry.textContent = '[' + time + '] type: ' + event.data.type + ' | reason: ' + (event.data.reason || 'N/A');
+        eventLog.appendChild(entry);
+        eventLog.scrollTop = eventLog.scrollHeight;
+      }
+    });
+  </script>
+</body>
+</html>
